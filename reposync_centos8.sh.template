@@ -1,0 +1,17 @@
+#!/bin/bash
+
+if [[ $USER != root ]]; then
+  echo "Must be root to run this!"
+  exit
+fi
+
+repos_base_dir="<<REPOSTORE>>/repos/centos/8/"
+
+# Start sync if base repo directory exist
+if [[ -d "$repos_base_dir" ]] ; then
+  # Start Sync
+  rsync  -avSHP --delete rsync://mirror.liquidtelecom.com/centos/8/  "$repos_base_dir"
+  # Download CentOS 8 repository key
+  wget -P $repos_base_dir wget https://www.centos.org/keys/RPM-GPG-KEY-CentOS-Official
+fi
+
