@@ -1,0 +1,48 @@
+[BaseOS]
+name=CentOS-$releasever - Base
+baseurl=//<<REPOIP>>/centos/$releasever/BaseOS/$basearch/os/
+gpgcheck=1
+enabled=1
+gpgkey=//<<REPOIP>>/centos/$releasever/RPM-GPG-KEY-CentOS-Official
+
+[AppStream]
+name=CentOS-$releasever - AppStream
+baseurl=//<<REPOIP>>/centos/$releasever/AppStream/$basearch/os/
+gpgcheck=1
+enabled=1
+gpgkey=//<<REPOIP>>/centos/$releasever/RPM-GPG-KEY-CentOS-Official
+
+[centosplus]
+name=CentOS-$releasever - Plus
+baseurl=//<<REPOIP>>/centos/$releasever/centosplus/$basearch/os/
+gpgcheck=1
+enabled=0
+gpgkey=//<<REPOIP>>/centos/$releasever/RPM-GPG-KEY-CentOS-Official
+
+[extras]
+name=CentOS-$releasever - Extras
+baseurl=//<<REPOIP>>/centos/$releasever/extras/$basearch/os/
+gpgcheck=1
+enabled=1
+gpgkey=//<<REPOIP>>/centos/$releasever/RPM-GPG-KEY-CentOS-Official
+
+[PowerTools]
+name=CentOS-$releasever - PowerTools
+baseurl=//<<REPOIP>>/centos/$releasever/PowerTools/$basearch/os/
+gpgcheck=1
+enabled=0
+gpgkey=//<<REPOIP>>/centos/$releasever/RPM-GPG-KEY-CentOS-Official
+
+[cr]
+name=CentOS-$releasever - cr
+baseurl=//<<REPOIP>>/centos/$releasever/cr/$basearch/os/
+gpgcheck=1
+enabled=0
+gpgkey=//<<REPOIP>>/centos/$releasever/RPM-GPG-KEY-CentOS-Official
+
+[fasttrack]
+name=CentOS-$releasever - fasttrack
+baseurl=//<<REPOIP>>/centos/$releasever/fasttrack/$basearch/os/
+gpgcheck=1
+enabled=0
+gpgkey=//<<REPOIP>>/centos/$releasever/RPM-GPG-KEY-CentOS-Official
