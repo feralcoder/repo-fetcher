@@ -17,6 +17,7 @@ cd /etc/yum.repos.d/
 mkdir old-repos
 mv *.repo old-repos
 mv old-repos/CentOS-Linux-Sources.repo .
+mv epel* .
 
 cat $ABS_PATH/feralcoder.repo | sed "s|<<REPOIP>>|$REPOIP|g" > ./feralcoder.repo
 
