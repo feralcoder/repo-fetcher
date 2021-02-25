@@ -17,7 +17,7 @@ cd /etc/yum.repos.d/
 mkdir old-repos
 mv *.repo old-repos
 mv old-repos/CentOS-Linux-Sources.repo .
-mv epel* .
+mv old-repos/epel* .
 
 cat $ABS_PATH/feralcoder.repo | sed "s|<<REPOIP>>|$REPOIP|g" > ./feralcoder.repo
 
@@ -25,6 +25,6 @@ yum clean all
 yum makecache
 yum repolist
 yum -y update
-yum install yum-utils
+yum -y install yum-utils
 yum-config-manager --enable PowerTools
 #yum-config-manager --enable centosplus
