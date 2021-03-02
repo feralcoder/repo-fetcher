@@ -1,0 +1,7 @@
+[docker]
+baseurl = http://<<REPOIP>>/docker/centos/$releasever/$basearch/stable
+gpgcheck = 1
+gpgkey = https://<<REPOIP>>/docker/centos/gpg
+name = Docker main Repository
+
+module_hotfixes = True

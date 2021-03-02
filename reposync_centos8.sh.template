@@ -6,20 +6,31 @@ if [[ $USER != root ]]; then
 fi
 
 CENTOS_BASE_DIR="<<REPOSTORE>>/repos/centos/"
-
 RELEASES="8 8-stream"
 
+#for RELEASE in $RELEASES; do
+#   # Start sync if base repo directory exist
+#   if [[ -d "$CENTOS_BASE_DIR/$RELEASE" ]] ; then
+#     mkdir -p $CENTOS_BASE_DIR/$RELEASE/isos/x86_64
+#     # Start Sync
+#     rsync  --chown=nginx:nginx --chmod=ug=rw,o=r,Dugo+X --perms --exclude 'aarch64' --exclude 'ppc64le' -avSHP --delete rsync://mirror.liquidtelecom.com/centos/$RELEASE/isos/x86_64/ $CENTOS_BASE_DIR/$RELEASE/isos/x86_64/
+#     rsync  --chown=nginx:nginx --chmod=ug=rw,o=r,Dugo+X --perms --exclude 'aarch64' --exclude 'ppc64le' -avSHP --delete rsync://mirror.liquidtelecom.com/centos/$RELEASE/  $CENTOS_BASE_DIR/$RELEASE/
+#     # Download CentOS 8 repository key
+#     wget -P $CENTOS_BASE_DIR/$RELEASE/ wget https://www.centos.org/keys/RPM-GPG-KEY-CentOS-Official
+#   else
+#     echo "Repo directory  $CENTOS_BASE_DIR/$RELEASE does not exist!"
+#   fi
+#done
+
+DOCKER_BASE_DIR="<<REPOSTORE>>/repos/docker/centos/"
+RELEASES="8"
+
 for RELEASE in $RELEASES; do
-   # Start sync if base repo directory exist
-   if [[ -d "$CENTOS_BASE_DIR/$RELEASE" ]] ; then
-     mkdir -p $CENTOS_BASE_DIR/$RELEASE/isos/x86_64
-     # Start Sync
-     rsync  --chown=nginx:nginx --chmod=ug=rw,o=r,Dugo+X --perms --exclude 'aarch64' --exclude 'ppc64le' -avSHP --delete rsync://mirror.liquidtelecom.com/centos/$RELEASE/isos/x86_64/ $CENTOS_BASE_DIR/$RELEASE/isos/x86_64/
-     rsync  --chown=nginx:nginx --chmod=ug=rw,o=r,Dugo+X --perms --exclude 'aarch64' --exclude 'ppc64le' -avSHP --delete rsync://mirror.liquidtelecom.com/centos/$RELEASE/  $CENTOS_BASE_DIR/$RELEASE/
-     # Download CentOS 8 repository key
-     wget -P $CENTOS_BASE_DIR/$RELEASE/ wget https://www.centos.org/keys/RPM-GPG-KEY-CentOS-Official
+  if [[ -d "$DOCKER_BASE_DIR/$RELEASE" ]]; then
+     mkdir -p $DOCKER_BASE_DIR/$RELEASE/x86_64/stable
+     rsync  --chown=nginx:nginx --chmod=ug=rw,o=r,Dugo+X --perms -avSHP --delete rsync://https://download.docker.com/linux/centos/$RELEASE/x86_64/ $DOCKER_BASE_DIR/$RELEASE/x86_64/
+#     wget -P $DOCKER_BASE_DIR/$RELEASE/ wget https://https://download.docker.com/linux/centos/???
    else
-     echo "Repo directory  $CENTOS_BASE_DIR/$RELEASE does not exist!"
+     echo "Repo directory  $DOCKER_BASE_DIR/$RELEASE does not exist!"
    fi
 done
-
