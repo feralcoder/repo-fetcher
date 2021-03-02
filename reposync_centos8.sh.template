@@ -33,6 +33,7 @@ for RELEASE in $RELEASES; do
      find $WGET_FETCH_DIR -name index.html -exec rm {} \;
      wget -N --recursive --convert-links --no-parent https://download.docker.com/linux/centos/$RELEASE/x86_64/stable/ -P $WGET_FETCH_DIR
      ln -s $WGET_FETCH_DIR/download.docker.com/linux/centos/$RELEASE/x86_64 $DOCKER_BASE_DIR/$RELEASE/
+     wget $WGET_FETCH_DIR/download.docker.com/linux/centos/gpg -o $DOCKER_BASE_DIR/gpg
    else
      echo "Repo directory  $DOCKER_BASE_DIR/$RELEASE does not exist!"
    fi
