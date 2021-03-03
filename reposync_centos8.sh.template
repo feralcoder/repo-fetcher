@@ -25,20 +25,23 @@ done
 
 DOCKER_BASE_DIR="<<REPOSTORE>>/repos/docker/centos/"
 # Release 7 is actually used in kolla-ansible setup on Centos8...
-RELEASES="8 7"
-WGET_FETCH_DIR="<<REPOSTORE>>/wget-fetch/"
+# Don't fetch, for now...
+RELEASES="8"
+FETCH_DIR="<<REPOSTORE>>/fetch-repos/"
 
 for RELEASE in $RELEASES; do
-  echo; echo "Syncing $DOCKER_BASE_DIR/$RELEASE/"
+  echo; echo "SYNCING $DOCKER_BASE_DIR/$RELEASE/"
   if [[ -d "$DOCKER_BASE_DIR/$RELEASE" ]]; then
-     mkdir -p $WGET_FETCH_DIR
+     mkdir -p $FETCH_DIR
      mkdir -p $DOCKER_BASE_DIR/$RELEASE/
      # This will hose index.html of other releases, which I think aren't needed...
-     find $WGET_FETCH_DIR -name index.html -exec rm {} \;
-     wget -N --recursive --convert-links --no-parent https://download.docker.com/linux/centos/$RELEASE/x86_64/stable/ -P $WGET_FETCH_DIR
-     ln -s $WGET_FETCH_DIR/download.docker.com/linux/centos/$RELEASE/x86_64 $DOCKER_BASE_DIR/$RELEASE/
-     wget $WGET_FETCH_DIR/download.docker.com/linux/centos/gpg -o $DOCKER_BASE_DIR/gpg
+
+     reposync -a x86_64 --download-metadata -p /repo-store/fetch-repos/ --repo docker-upstream
+
+     ln -s $FETCH_DIR/docker-upstream $DOCKER_BASE_DIR/$RELEASE/x86_64
+     wget https://download.docker.com/linux/centos/gpg -o $DOCKER_BASE_DIR/gpg
    else
      echo "Repo directory  $DOCKER_BASE_DIR/$RELEASE does not exist!"
    fi
 done
+
