@@ -33,12 +33,12 @@ for RELEASE in $RELEASES; do
   echo; echo "SYNCING $DOCKER_BASE_DIR/$RELEASE/"
   if [[ -d "$DOCKER_BASE_DIR/$RELEASE" ]]; then
      mkdir -p $FETCH_DIR
-     mkdir -p $DOCKER_BASE_DIR/$RELEASE/
+     mkdir -p $DOCKER_BASE_DIR/$RELEASE/x86_64
      # This will hose index.html of other releases, which I think aren't needed...
 
      reposync -a x86_64 --download-metadata -p /repo-store/fetch-repos/ --repo docker-upstream
 
-     ln -s $FETCH_DIR/docker-upstream $DOCKER_BASE_DIR/$RELEASE/x86_64
+     ln -s $FETCH_DIR/docker-upstream $DOCKER_BASE_DIR/$RELEASE/x86_64/stable
      wget https://download.docker.com/linux/centos/gpg -o $DOCKER_BASE_DIR/gpg
    else
      echo "Repo directory  $DOCKER_BASE_DIR/$RELEASE does not exist!"
