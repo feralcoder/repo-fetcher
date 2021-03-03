@@ -9,7 +9,7 @@ CENTOS_BASE_DIR="<<REPOSTORE>>/repos/centos/"
 RELEASES="8 8-stream"
 
 for RELEASE in $RELEASES; do
-   echo; echo "Syncing $CENTOS_BASE_DIR/$RELEASE/isos/x86_64/"
+   echo; echo "SYNCING $CENTOS_BASE_DIR/$RELEASE/"
    # Start sync if base repo directory exist
    if [[ -d "$CENTOS_BASE_DIR/$RELEASE" ]] ; then
      mkdir -p $CENTOS_BASE_DIR/$RELEASE/isos/x86_64
