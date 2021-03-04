@@ -26,7 +26,7 @@ cp $ABS_PATH/feralcoder-docker-upstream.repo ./feralcoder-docker-upstream.repo
 yum clean all
 yum makecache
 yum repolist
-yum -y update
-yum -y install yum-utils
-yum-config-manager --enable PowerTools
+#yum -y update
+#yum -y install yum-utils
+#yum-config-manager --enable PowerTools
 #yum-config-manager --enable centosplus
