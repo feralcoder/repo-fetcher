@@ -26,6 +26,10 @@ cp $ABS_PATH/feralcoder-docker-upstream.repo ./feralcoder-docker-upstream.repo
 yum clean all
 yum makecache
 yum repolist
+
+# The following is necessary to unwedge system updates after adding docker repo.
+dnf -y erase buildah podman
+
 #yum -y update
 #yum -y install yum-utils
 #yum-config-manager --enable PowerTools
