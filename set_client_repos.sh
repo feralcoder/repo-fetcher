@@ -14,7 +14,7 @@ fi
 REPOIP=192.168.127.220
 
 cd /etc/yum.repos.d/
-mkdir old-repos
+[[ -d old-repos ]] || mkdir old-repos
 mv *.repo old-repos
 mv old-repos/CentOS-Linux-Sources.repo .
 mv old-repos/epel* .
