@@ -5,3 +5,5 @@ gpgkey = http://<<REPOIP>>/docker/centos/gpg
 name = Docker main Repository
 
 module_hotfixes = True
+
+enabled=1
