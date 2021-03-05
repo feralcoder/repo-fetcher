@@ -39,7 +39,7 @@ for RELEASE in $RELEASES; do
      reposync -a x86_64 --download-metadata -p /repo-store/fetch-repos/ --repo docker-upstream
 
      ln -s $FETCH_DIR/docker-upstream $DOCKER_BASE_DIR/$RELEASE/x86_64/stable
-     wget https://download.docker.com/linux/centos/gpg -o $DOCKER_BASE_DIR/gpg
+     wget https://download.docker.com/linux/centos/gpg -O $DOCKER_BASE_DIR/gpg
    else
      echo "Repo directory  $DOCKER_BASE_DIR/$RELEASE does not exist!"
    fi
