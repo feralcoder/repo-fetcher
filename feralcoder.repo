@@ -46,3 +46,17 @@ baseurl=http://<<REPOIP>>/centos/$releasever/fasttrack/$basearch/os/
 gpgcheck=1
 enabled=0
 gpgkey=http://<<REPOIP>>/centos/$releasever/RPM-GPG-KEY-CentOS-Official
+
+[ha]
+name=CentOS Linux $releasever - HighAvailability
+baseurl=http://<<REPOIP>>/centos/$releasever/HighAvailability/$basearch/os/
+gpgcheck=1
+enabled=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
+
+[devel]
+name=CentOS Linux $releasever - Devel WARNING! FOR BUILDROOT USE ONLY!
+baseurl=http://<<REPOIP>>/centos/$releasever/Devel/$basearch/os/
+gpgcheck=1
+enabled=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
