@@ -1,10 +1,6 @@
 #!/bin/bash
 THIS_SOURCE="$(dirname ${BASH_SOURCE[0]})"
 ABS_PATH=$( readlink -f $THIS_SOURCE )
-echo Running scripts from: $THIS_SOURCE
-echo Apsolute path is: $ABS_PATH
-echo
-
 
 if [[ $USER != root ]]; then
   echo "Must be root to run this!"
@@ -14,10 +10,10 @@ fi
 REPOSTORE=/repo-store/
 HOSTIP=`ip addr | grep 192.168.127.220 | awk '{print $2}' | awk -F'/' '{print $1}'`
 
-dnf -y install @nginx
-yum -y install epel-release
-yum -y install nginx
-yum -y install wget tmux
+( yum list installed wget ) || yum -y install wget
+( yum list installed tmux ) || yum -y install tmux
+( yum list installed nginx ) || yum -y install @nginx
+( yum list installed epel-release ) || yum -y install epel-release
 
 systemctl enable --now nginx
 systemctl status nginx
@@ -25,11 +21,12 @@ systemctl status nginx
 firewall-cmd --add-service=http --permanent
 firewall-cmd --reload
 
-
 ### REPO STORE MANUALLY SET UP AND AVAILABLE
 
 mkdir -p $REPOSTORE/repos/docker/centos/8/
+mkdir -p $REPOSTORE/repos/docker/centos/7/
 mkdir -p $REPOSTORE/repos/centos/8/
+mkdir -p $REPOSTORE/repos/centos/8-stream/
 mkdir -p $REPOSTORE/logs/
 
 cat $THIS_SOURCE/reposync_centos8.sh.template | sed "s|<<REPOSTORE>>|$REPOSTORE|g" > $THIS_SOURCE/reposync_centos8.sh
