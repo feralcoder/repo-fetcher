@@ -1,0 +1,33 @@
+version: "1.0.0"
+variant: fcos
+passwd:
+  users:
+    - name: core
+      ssh_authorized_keys:
+        - <<SSH_PUBKEY>>
+      password_hash: $6$nvMhlsGFZ.eMUnFR$dk3PhiT44rdZrsu22g5Vs22D8/WKs0zTomckAUPgZgM5//8jcCvkWYy9x3npllsZMn6zCxCHnGHSZS9WsYmRd1
+      groups:
+        - wheel
+        - docker
+    - name: root
+      ssh_authorized_keys:
+        - <<SSH_PUBKEY>>
+      password_hash: $6$nvMhlsGFZ.eMUnFR$dk3PhiT44rdZrsu22g5Vs22D8/WKs0zTomckAUPgZgM5//8jcCvkWYy9x3npllsZMn6zCxCHnGHSZS9WsYmRd1
+      groups:
+        - wheel
+        - docker
+    - name: cliff
+      ssh_authorized_keys:
+        - <<SSH_PUBKEY>>
+      password_hash: $6$nvMhlsGFZ.eMUnFR$dk3PhiT44rdZrsu22g5Vs22D8/WKs0zTomckAUPgZgM5//8jcCvkWYy9x3npllsZMn6zCxCHnGHSZS9WsYmRd1
+      groups:
+        - wheel
+        - docker
+storage:
+  files:
+    - path: /etc/ssh/sshd_config.d/20-enable-passwords.conf
+      mode: 0644
+      contents:
+        inline: |
+          PasswordAuthentication yes
+
