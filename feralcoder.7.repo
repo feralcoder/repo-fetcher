@@ -1,0 +1,45 @@
+[base]
+name=CentOS-$releasever - Base
+baseurl=http://<<REPOIP>>/centos/$releasever/os/$basearch/
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+
+[updates]
+name=CentOS-$releasever - Updates
+baseurl=http://<<REPOIP>>/centos/$releasever/updates/$basearch/
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+
+[extras]
+name=CentOS-$releasever - Extras
+baseurl=http://<<REPOIP>>/centos/$releasever/extras/$basearch/
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+
+[centosplus]
+name=CentOS-$releasever - Plus
+baseurl=http://<<REPOIP>>/centos/$releasever/centosplus/$basearch/
+gpgcheck=0
+enabled=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+
+[cr]
+name=CentOS-$releasever - cr
+baseurl=http://<<REPOIP>>/centos/$releasever/cr/$basearch/
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+enabled=0
+
+[fasttrack]
+name=CentOS-7 - fasttrack
+baseurl=http://<<REPOIP>>/centos/$releasever/fasttrack/$basearch/
+gpgcheck=0
+enabled=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+
+[centos-kernel]
+name=CentOS LTS Kernels for $basearch
+baseurl=http://<<REPOIP>>/centos-altarch/7/kernel/$basearch/
+enabled=0
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
