@@ -6,7 +6,7 @@ if [[ $USER != root ]]; then
 fi
 
 CENTOS_BASE_DIR="<<REPOSTORE>>/repos/centos/"
-RELEASES="8 8-stream"
+RELEASES="7 8 8-stream"
 
 for RELEASE in $RELEASES; do
    echo; echo "SYNCING $CENTOS_BASE_DIR/$RELEASE/"
@@ -26,7 +26,7 @@ done
 DOCKER_BASE_DIR="<<REPOSTORE>>/repos/docker/centos/"
 # Release 7 is actually used in kolla-ansible setup on Centos8...
 # Don't fetch, for now...
-RELEASES="8"
+RELEASES="7 8"
 FETCH_DIR="<<REPOSTORE>>/fetch-repos/"
 
 for RELEASE in $RELEASES; do
@@ -36,7 +36,7 @@ for RELEASE in $RELEASES; do
      mkdir -p $DOCKER_BASE_DIR/$RELEASE/x86_64
      # This will hose index.html of other releases, which I think aren't needed...
 
-     reposync -a x86_64 --download-metadata -p /repo-store/fetch-repos/ --repo docker-upstream
+     reposync -c /etc/yum.repos.d/feralcoder-docker-upstream$RELEASE.repo -a x86_64 --download-metadata -p /repo-store/fetch-repos/ --repo docker-upstream
 
      ln -s $FETCH_DIR/docker-upstream $DOCKER_BASE_DIR/$RELEASE/x86_64/stable
      wget https://download.docker.com/linux/centos/gpg -O $DOCKER_BASE_DIR/gpg
@@ -46,7 +46,7 @@ for RELEASE in $RELEASES; do
 done
 
 PUPPET_BASE_DIR="<<REPOSTORE>>/repos/puppet/el/"
-RELEASES="8"
+RELEASES="7 8"
 FETCH_DIR="<<REPOSTORE>>/fetch-repos/"
 
 for RELEASE in $RELEASES; do
@@ -56,7 +56,7 @@ for RELEASE in $RELEASES; do
      mkdir -p $PUPPET_BASE_DIR/$RELEASE/
      # This will hose index.html of other releases, which I think aren't needed...
 
-     reposync -a x86_64 --download-metadata -p /repo-store/fetch-repos/ --repo puppet-upstream
+     reposync -c /etc/yum.repos.d/feralcoder-puppet-upstream$RELEASE.repo -a x86_64 --download-metadata -p /repo-store/fetch-repos/ --repo puppet-upstream
 
      ln -s $FETCH_DIR/puppet-upstream $PUPPET_BASE_DIR/$RELEASE/x86_64
    else
