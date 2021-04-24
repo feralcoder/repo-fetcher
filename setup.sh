@@ -28,6 +28,7 @@ mkdir -p $REPOSTORE/repos/puppet/el/8/
 mkdir -p $REPOSTORE/repos/docker/centos/7/
 mkdir -p $REPOSTORE/repos/docker/centos/8/
 mkdir -p $REPOSTORE/repos/centos/7/
+mkdir -p $REPOSTORE/repos/centos-altarch/7/kernel/x86_64/
 mkdir -p $REPOSTORE/repos/centos/8/
 mkdir -p $REPOSTORE/repos/centos/8-stream/
 mkdir -p $REPOSTORE/logs/

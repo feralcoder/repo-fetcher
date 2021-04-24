@@ -32,7 +32,7 @@ get_os_version
 if [[ $MAJOR == 8 ]]; then
   cat $ABS_PATH/feralcoder.8.repo | sed "s|<<REPOIP>>|$REPOIP|g" > ./feralcoder.repo
 elif [[ $MAJOR == 7 ]]; then
-  echo "WE NEED CENTOS7 REPO FILE!"
+  cat $ABS_PATH/feralcoder.7.repo | sed "s|<<REPOIP>>|$REPOIP|g" > ./feralcoder.repo
 fi
 cat $ABS_PATH/feralcoder-puppet.repo | sed "s|<<REPOIP>>|$REPOIP|g" > ./feralcoder-puppet.repo
 cp $ABS_PATH/feralcoder-puppet-upstream7.repo ./feralcoder-puppet-upstream7.repo

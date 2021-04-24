@@ -15,12 +15,15 @@ for RELEASE in $RELEASES; do
      mkdir -p $CENTOS_BASE_DIR/$RELEASE/isos/x86_64
      # Start Sync
      rsync  --chown=nginx:nginx --chmod=ug=rw,o=r,Dugo+X --perms --exclude 'aarch64' --exclude 'ppc64le' -avSHP --delete rsync://mirror.liquidtelecom.com/centos/$RELEASE/isos/x86_64/ $CENTOS_BASE_DIR/$RELEASE/isos/x86_64/
-     rsync  --chown=nginx:nginx --chmod=ug=rw,o=r,Dugo+X --perms --exclude 'aarch64' --exclude 'ppc64le' -avSHP --delete rsync://mirror.liquidtelecom.com/centos/$RELEASE/  $CENTOS_BASE_DIR/$RELEASE/
+     rsync  --chown=nginx:nginx --chmod=ug=rw,o=r,Dugo+X --perms --exclude 'aarch64' --exclude 'ppc64le' --exclude 'Source' -avSHP --delete rsync://mirror.liquidtelecom.com/centos/$RELEASE/  $CENTOS_BASE_DIR/$RELEASE/
      # Download CentOS 8 repository key
      wget -P $CENTOS_BASE_DIR/$RELEASE/ wget https://www.centos.org/keys/RPM-GPG-KEY-CentOS-Official
    else
      echo "Repo directory  $CENTOS_BASE_DIR/$RELEASE does not exist!"
    fi
+    if [[ $RELEASE == 7 ]]; then
+      rsync  --chown=nginx:nginx --chmod=ug=rw,o=r,Dugo+X --perms --exclude 'aarch64' --exclude 'ppc64le' -avSHP --delete rsync://mirror.liquidtelecom.com/centos-altarch/7/kernel/x86_64/  /repo-store//repos/centos-altarch/7/kernel/x86_64/
+    fi
 done
 
 DOCKER_BASE_DIR="<<REPOSTORE>>/repos/docker/centos/"
