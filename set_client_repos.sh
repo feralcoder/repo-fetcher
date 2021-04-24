@@ -21,9 +21,11 @@ mv old-repos/epel* .
 
 cat $ABS_PATH/feralcoder.repo | sed "s|<<REPOIP>>|$REPOIP|g" > ./feralcoder.repo
 cat $ABS_PATH/feralcoder-puppet.repo | sed "s|<<REPOIP>>|$REPOIP|g" > ./feralcoder-puppet.repo
-cp $ABS_PATH/feralcoder-puppet-upstream.repo ./feralcoder-puppet-upstream.repo
+cp $ABS_PATH/feralcoder-puppet-upstream7.repo ./feralcoder-puppet-upstream7.repo
+cp $ABS_PATH/feralcoder-puppet-upstream8.repo ./feralcoder-puppet-upstream8.repo
 cat $ABS_PATH/feralcoder-docker.repo | sed "s|<<REPOIP>>|$REPOIP|g" > ./feralcoder-docker.repo
-cp $ABS_PATH/feralcoder-docker-upstream.repo ./feralcoder-docker-upstream.repo
+cp $ABS_PATH/feralcoder-docker-upstream7.repo ./feralcoder-docker-upstream7.repo
+cp $ABS_PATH/feralcoder-docker-upstream8.repo ./feralcoder-docker-upstream8.repo
 
 yum clean all
 yum makecache
