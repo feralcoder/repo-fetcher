@@ -19,7 +19,21 @@ mv *.repo old-repos
 mv old-repos/CentOS-Linux-Sources.repo .
 mv old-repos/epel* .
 
-cat $ABS_PATH/feralcoder.repo | sed "s|<<REPOIP>>|$REPOIP|g" > ./feralcoder.repo
+get_os_version () {
+  if ( grep -i 'centos\|rhel' /etc/redhat-release ); then
+    OS=CENTOS
+    RELEASE=`cat /etc/redhat-release | sed 's/ /\n/g' | grep '[0-9]'`
+    MAJOR=`echo $RELEASE | awk -F'.' '{print $1}'`
+  fi
+}
+
+
+get_os_version
+if [[ $MAJOR == 8 ]]; then
+  cat $ABS_PATH/feralcoder.8.repo | sed "s|<<REPOIP>>|$REPOIP|g" > ./feralcoder.repo
+elif [[ $MAJOR == 7 ]]; then
+  echo "WE NEED CENTOS7 REPO FILE!"
+fi
 cat $ABS_PATH/feralcoder-puppet.repo | sed "s|<<REPOIP>>|$REPOIP|g" > ./feralcoder-puppet.repo
 cp $ABS_PATH/feralcoder-puppet-upstream7.repo ./feralcoder-puppet-upstream7.repo
 cp $ABS_PATH/feralcoder-puppet-upstream8.repo ./feralcoder-puppet-upstream8.repo
