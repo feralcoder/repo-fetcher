@@ -45,3 +45,22 @@ for RELEASE in $RELEASES; do
    fi
 done
 
+PUPPET_BASE_DIR="<<REPOSTORE>>/repos/puppet/el/"
+RELEASES="8"
+FETCH_DIR="<<REPOSTORE>>/fetch-repos/"
+
+for RELEASE in $RELEASES; do
+  echo; echo "SYNCING $PUPPET_BASE_DIR/$RELEASE/"
+  if [[ -d "$PUPPET_BASE_DIR/$RELEASE" ]]; then
+     mkdir -p $FETCH_DIR
+     mkdir -p $PUPPET_BASE_DIR/$RELEASE/
+     # This will hose index.html of other releases, which I think aren't needed...
+
+     reposync -a x86_64 --download-metadata -p /repo-store/fetch-repos/ --repo puppet-upstream
+
+     ln -s $FETCH_DIR/puppet-upstream $PUPPET_BASE_DIR/$RELEASE/x86_64
+   else
+     echo "Repo directory  $PUPPET_BASE_DIR/$RELEASE does not exist!"
+   fi
+done
+
