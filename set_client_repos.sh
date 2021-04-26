@@ -31,12 +31,15 @@ get_os_version () {
 get_os_version
 if [[ $MAJOR == 8 ]]; then
   cat $ABS_PATH/feralcoder.8.repo | sed "s|<<REPOIP>>|$REPOIP|g" > ./feralcoder.repo
+  cat $ABS_PATH/feralcoder-puppet7.repo | sed "s|<<REPOIP>>|$REPOIP|g" > ./feralcoder-puppet7.repo
 elif [[ $MAJOR == 7 ]]; then
   cat $ABS_PATH/feralcoder.7.repo | sed "s|<<REPOIP>>|$REPOIP|g" > ./feralcoder.repo
+  cat $ABS_PATH/feralcoder-puppet6.repo | sed "s|<<REPOIP>>|$REPOIP|g" > ./feralcoder-puppet6.repo
 fi
-cat $ABS_PATH/feralcoder-puppet.repo | sed "s|<<REPOIP>>|$REPOIP|g" > ./feralcoder-puppet.repo
-cp $ABS_PATH/feralcoder-puppet-upstream7.repo ./feralcoder-puppet-upstream7.repo
-cp $ABS_PATH/feralcoder-puppet-upstream8.repo ./feralcoder-puppet-upstream8.repo
+cp $ABS_PATH/feralcoder-puppet6-upstream7.repo ./feralcoder-puppet6-upstream7.repo
+cp $ABS_PATH/feralcoder-puppet6-upstream8.repo ./feralcoder-puppet6-upstream8.repo
+cp $ABS_PATH/feralcoder-puppet7-upstream7.repo ./feralcoder-puppet7-upstream7.repo
+cp $ABS_PATH/feralcoder-puppet7-upstream8.repo ./feralcoder-puppet7-upstream8.repo
 cat $ABS_PATH/feralcoder-docker.repo | sed "s|<<REPOIP>>|$REPOIP|g" > ./feralcoder-docker.repo
 cp $ABS_PATH/feralcoder-docker-upstream7.repo ./feralcoder-docker-upstream7.repo
 cp $ABS_PATH/feralcoder-docker-upstream8.repo ./feralcoder-docker-upstream8.repo

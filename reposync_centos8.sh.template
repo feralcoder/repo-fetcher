@@ -16,7 +16,7 @@ for RELEASE in $RELEASES; do
      # Start Sync
      rsync  --chown=nginx:nginx --chmod=ug=rw,o=r,Dugo+X --perms --exclude 'aarch64' --exclude 'ppc64le' -avSHP --delete rsync://mirror.liquidtelecom.com/centos/$RELEASE/isos/x86_64/ $CENTOS_BASE_DIR/$RELEASE/isos/x86_64/
      rsync  --chown=nginx:nginx --chmod=ug=rw,o=r,Dugo+X --perms --exclude 'aarch64' --exclude 'ppc64le' --exclude 'Source' -avSHP --delete rsync://mirror.liquidtelecom.com/centos/$RELEASE/  $CENTOS_BASE_DIR/$RELEASE/
-     # Download CentOS 8 repository key
+     # Download CentOS X repository key
      wget -P $CENTOS_BASE_DIR/$RELEASE/ wget https://www.centos.org/keys/RPM-GPG-KEY-CentOS-Official
    else
      echo "Repo directory  $CENTOS_BASE_DIR/$RELEASE does not exist!"
@@ -29,41 +29,46 @@ done
 DOCKER_BASE_DIR="<<REPOSTORE>>/repos/docker/centos/"
 # Release 7 is actually used in kolla-ansible setup on Centos8...
 # Don't fetch, for now...
-RELEASES="7 8"
+OS_RELEASES="7 8"
 FETCH_DIR="<<REPOSTORE>>/fetch-repos/"
 
-for RELEASE in $RELEASES; do
-  echo; echo "SYNCING $DOCKER_BASE_DIR/$RELEASE/"
-  if [[ -d "$DOCKER_BASE_DIR/$RELEASE" ]]; then
-     mkdir -p $FETCH_DIR
-     mkdir -p $DOCKER_BASE_DIR/$RELEASE/x86_64
-     # This will hose index.html of other releases, which I think aren't needed...
+for OS_RELEASE in $OS_RELEASES; do
+  OSRELEASE_FETCH_DIR=$FETCH_DIR/centos$OS_RELEASE/
+  echo; echo "SYNCING $DOCKER_BASE_DIR/$OS_RELEASE/"
+  if [[ -d "$DOCKER_BASE_DIR/$OS_RELEASE" ]]; then
+      mkdir -p $OSRELEASE_FETCH_DIR
+      mkdir -p $DOCKER_BASE_DIR/$OS_RELEASE/x86_64
 
-     reposync -c /etc/yum.repos.d/feralcoder-docker-upstream$RELEASE.repo -a x86_64 --download-metadata -p /repo-store/fetch-repos/ --repo docker-upstream
+      reposync -c /etc/yum.repos.d/feralcoder-docker-upstream$OS_RELEASE.repo -a x86_64 --download-metadata -p $OSRELEASE_FETCH_DIR --repo docker-upstream$OS_RELEASE
 
-     ln -s $FETCH_DIR/docker-upstream $DOCKER_BASE_DIR/$RELEASE/x86_64/stable
-     wget https://download.docker.com/linux/centos/gpg -O $DOCKER_BASE_DIR/gpg
+      ln -s $OSRELEASE_FETCH_DIR/docker-upstream$OS_RELEASE $DOCKER_BASE_DIR/$OS_RELEASE/x86_64/stable
+      wget https://download.docker.com/linux/centos/gpg -O $DOCKER_BASE_DIR/gpg
    else
-     echo "Repo directory  $DOCKER_BASE_DIR/$RELEASE does not exist!"
+      echo "Repo directory  $DOCKER_BASE_DIR/$OS_RELEASE does not exist!"
    fi
 done
 
-PUPPET_BASE_DIR="<<REPOSTORE>>/repos/puppet/el/"
-RELEASES="7 8"
+
+PUPPET_RELEASES="6 7"
+OS_RELEASES="7 8"
 FETCH_DIR="<<REPOSTORE>>/fetch-repos/"
 
-for RELEASE in $RELEASES; do
-  echo; echo "SYNCING $PUPPET_BASE_DIR/$RELEASE/"
-  if [[ -d "$PUPPET_BASE_DIR/$RELEASE" ]]; then
-     mkdir -p $FETCH_DIR
-     mkdir -p $PUPPET_BASE_DIR/$RELEASE/
-     # This will hose index.html of other releases, which I think aren't needed...
+for PUPPET_RELEASE in $PUPPET_RELEASES; do
+  PUPPET_BASE_DIR="/repo-store/repos/puppet$PUPPET_RELEASE/el/"
+  for OS_RELEASE in $OS_RELEASES; do
+    OSRELEASE_FETCH_DIR=$FETCH_DIR/centos$OS_RELEASE/
+    echo; echo "SYNCING $PUPPET_BASE_DIR/$OS_RELEASE/"
+    if [[ -d "$PUPPET_BASE_DIR/$OS_RELEASE" ]]; then
+       mkdir -p $OSRELEASE_FETCH_DIR
+       mkdir -p $PUPPET_BASE_DIR/$OS_RELEASE/
+       # This will hose index.html of other releases, which I think aren't needed...
 
-     reposync -c /etc/yum.repos.d/feralcoder-puppet-upstream$RELEASE.repo -a x86_64 --download-metadata -p /repo-store/fetch-repos/ --repo puppet-upstream
+       reposync -c /etc/yum.repos.d/feralcoder-puppet$PUPPET_RELEASE-upstream$OS_RELEASE.repo -a x86_64 --download-metadata -p $OSRELEASE_FETCH_DIR --repo puppet$PUPPET_RELEASE-upstream$OS_RELEASE
 
-     ln -s $FETCH_DIR/puppet-upstream $PUPPET_BASE_DIR/$RELEASE/x86_64
-   else
-     echo "Repo directory  $PUPPET_BASE_DIR/$RELEASE does not exist!"
-   fi
+       ln -s $OSRELEASE_FETCH_DIR/puppet$PUPPET_RELEASE-upstream$OS_RELEASE $PUPPET_BASE_DIR/$OS_RELEASE/x86_64
+     else
+       echo "Repo directory  $PUPPET_BASE_DIR/$OS_RELEASE does not exist!"
+     fi
+  done
 done
 

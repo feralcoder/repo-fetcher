@@ -23,8 +23,10 @@ firewall-cmd --reload
 
 ### REPO STORE MANUALLY SET UP AND AVAILABLE
 
-mkdir -p $REPOSTORE/repos/puppet/el/7/
-mkdir -p $REPOSTORE/repos/puppet/el/8/
+mkdir -p $REPOSTORE/repos/puppet7/el/7/
+mkdir -p $REPOSTORE/repos/puppet7/el/8/
+mkdir -p $REPOSTORE/repos/puppet6/el/7/
+mkdir -p $REPOSTORE/repos/puppet6/el/8/
 mkdir -p $REPOSTORE/repos/docker/centos/7/
 mkdir -p $REPOSTORE/repos/docker/centos/8/
 mkdir -p $REPOSTORE/repos/centos/7/
