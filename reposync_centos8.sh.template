@@ -41,7 +41,7 @@ for OS_RELEASE in $OS_RELEASES; do
 
       reposync -c /etc/yum.repos.d/feralcoder-docker-upstream$OS_RELEASE.repo -a x86_64 --download-metadata -p $OSRELEASE_FETCH_DIR --repo docker-upstream$OS_RELEASE
 
-      ln -s $OSRELEASE_FETCH_DIR/docker-upstream$OS_RELEASE $DOCKER_BASE_DIR/$OS_RELEASE/x86_64/stable
+      [[ -L $DOCKER_BASE_DIR/$OS_RELEASE/x86_64/stable ]] || ln -s $OSRELEASE_FETCH_DIR/docker-upstream$OS_RELEASE $DOCKER_BASE_DIR/$OS_RELEASE/x86_64/stable
       wget https://download.docker.com/linux/centos/gpg -O $DOCKER_BASE_DIR/gpg
    else
       echo "Repo directory  $DOCKER_BASE_DIR/$OS_RELEASE does not exist!"
@@ -63,9 +63,13 @@ for PUPPET_RELEASE in $PUPPET_RELEASES; do
        mkdir -p $PUPPET_BASE_DIR/$OS_RELEASE/
        # This will hose index.html of other releases, which I think aren't needed...
 
-       reposync -c /etc/yum.repos.d/feralcoder-puppet$PUPPET_RELEASE-upstream$OS_RELEASE.repo -a x86_64 --download-metadata -p $OSRELEASE_FETCH_DIR --repo puppet$PUPPET_RELEASE-upstream$OS_RELEASE
+       # Puppetlabs' own repodata broken, so reposync fails to fetch all.  Amateurs.
+       #reposync -c /etc/yum.repos.d/feralcoder-puppet$PUPPET_RELEASE-upstream$OS_RELEASE.repo -a x86_64 --download-metadata -p $OSRELEASE_FETCH_DIR --repo puppet$PUPPET_RELEASE-upstream$OS_RELEASE
+       mkdir -p $OSRELEASE_FETCH_DIR/puppet$PUPPET_RELEASE-upstream$OS_RELEASE
+       rsync -avH --exclude 'repodata' rsync://rsync.puppet.com/packages/yum/puppet$PUPPET_RELEASE/el/$OS_RELEASE/x86_64/ $OSRELEASE_FETCH_DIR/puppet$PUPPET_RELEASE-upstream$OS_RELEASE
+       createrepo $OSRELEASE_FETCH_DIR/puppet$PUPPET_RELEASE-upstream$OS_RELEASE
 
-       ln -s $OSRELEASE_FETCH_DIR/puppet$PUPPET_RELEASE-upstream$OS_RELEASE $PUPPET_BASE_DIR/$OS_RELEASE/x86_64
+       [[ -L $PUPPET_BASE_DIR/$OS_RELEASE/x86_64 ]] || ln -s $OSRELEASE_FETCH_DIR/puppet$PUPPET_RELEASE-upstream$OS_RELEASE $PUPPET_BASE_DIR/$OS_RELEASE/x86_64
      else
        echo "Repo directory  $PUPPET_BASE_DIR/$OS_RELEASE does not exist!"
      fi
