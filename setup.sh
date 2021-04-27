@@ -10,7 +10,7 @@ fi
 REPOSTORE=/repo-store/
 HOSTIP=`ip addr | grep 192.168.127.220 | awk '{print $2}' | awk -F'/' '{print $1}'`
 
-( yum list installed createrepo ) || yum -y install createrepo
+( yum list installed createrepo_c ) || yum -y install createrepo_c
 ( yum list installed wget ) || yum -y install wget
 ( yum list installed tmux ) || yum -y install tmux
 ( yum list installed nginx ) || yum -y install @nginx
