@@ -1,6 +1,6 @@
 [mariadb-main]
 name = MariaDB Server
-baseurl = https://<<REPOIP>>/MariaDB/mariadb-10.5/yum/rhel/8/x86_64
+baseurl = http://<<REPOIP>>/MariaDB/mariadb-10.5/yum/rhel/8/x86_64
 gpgkey = file:///etc/pki/rpm-gpg/MariaDB-Server-GPG-KEY
 gpgcheck = 0
 enabled = 1
@@ -10,14 +10,14 @@ module_hotfixes = 1
 # To use the latest stable release of MaxScale, use "latest" as the version
 # To use the latest beta (or stable if no current beta) release of MaxScale, use "beta" as the version
 name = MariaDB MaxScale
-baseurl = https://<<REPOIP>>/MariaDB/maxscale/latest/yum/rhel/8/x86_64
+baseurl = http://<<REPOIP>>/MariaDB/maxscale/latest/yum/rhel/8/x86_64
 gpgkey = file:///etc/pki/rpm-gpg/MariaDB-MaxScale-GPG-KEY
 gpgcheck = 0
 enabled = 1
 
 [mariadb-tools]
 name = MariaDB Tools
-baseurl = https://<<REPOIP>>/MariaDB/Tools/rhel/8/x86_64
+baseurl = http://<<REPOIP>>/MariaDB/Tools/rhel/8/x86_64
 gpgkey = file:///etc/pki/rpm-gpg/MariaDB-Enterprise-GPG-KEY
 gpgcheck = 0
 enabled = 1
