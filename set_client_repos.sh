@@ -36,6 +36,7 @@ elif [[ $MAJOR == 7 ]]; then
   cat $ABS_PATH/feralcoder.7.repo | sed "s|<<REPOIP>>|$REPOIP|g" > ./feralcoder.repo
   cat $ABS_PATH/feralcoder-puppet6.repo | sed "s|<<REPOIP>>|$REPOIP|g" > ./feralcoder-puppet6.repo
 fi
+cp $ABS_PATH/feralcoder-8-mariadb-upstream.repo ./feralcoder-8-mariadb-upstream.repo
 cp $ABS_PATH/feralcoder-puppet6-upstream7.repo ./feralcoder-puppet6-upstream7.repo
 cp $ABS_PATH/feralcoder-puppet6-upstream8.repo ./feralcoder-puppet6-upstream8.repo
 cp $ABS_PATH/feralcoder-puppet7-upstream7.repo ./feralcoder-puppet7-upstream7.repo

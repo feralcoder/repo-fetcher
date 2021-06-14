@@ -77,3 +77,53 @@ for PUPPET_RELEASE in $PUPPET_RELEASES; do
   done
 done
 
+
+MARIADB_BASE_DIR="<<REPOSTORE>>/repos/MariaDB/"
+MARIADB_FETCH_DIR="<<REPOSTORE>>/fetch-repos/mariadb-upstream/"
+OS_RELEASES="8"
+
+fetch_repo () {
+      echo; echo "FETCHING $REPO_FETCH_DIR/$OSRELEASE_ARCH_DIR"
+
+      mkdir -p $REPO_FETCH_DIR
+      reposync -c $UPSTREAM_CONFIG -a x86_64 --download-metadata -p $REPO_FETCH_DIR/ --repo $UPSTREAM_NAME
+
+      mkdir -p $REPO_DIR
+      # REMOVE LAST DIRECTORY FOR LINKING - will fail after symlink created, it's OK
+      rmdir $REPO_DIR
+      [[ -L $REPO_DIR ]] || ln -s $REPO_FETCH_DIR/$UPSTREAM_NAME $REPO_DIR
+      # wget https://download.docker.com/linux/centos/gpg -O $MARIADB_BASE_DIR/gpg
+}
+
+for OS_RELEASE in $OS_RELEASES; do
+  OSRELEASE_ARCH_DIR=/rhel/$OS_RELEASE/x86_64
+  REPO_FETCH_DIR=$MARIADB_FETCH_DIR/$OSRELEASE_ARCH_DIR
+  UPSTREAM_CONFIG=/etc/yum.repos.d/feralcoder-$OS_RELEASE-mariadb-upstream.repo
+
+  if [[ -d "$MARIADB_BASE_DIR" ]] && [[ -d "$MARIADB_FETCH_DIR" ]]; then
+      #< baseurl = https://<<REPOIP>>/MariaDB/mariadb-10.5/yum/rhel/8/x86_64
+      #> baseurl = https://downloads.mariadb.com/MariaDB/mariadb-10.5/yum/rhel/8/x86_64
+      UPSTREAM_NAME=mariadb-main-upstream$OS_RELEASE
+      REPO_DIR=$MARIADB_BASE_DIR/mariadb-10.5/yum/$OSRELEASE_ARCH_DIR
+      fetch_repo
+
+      #< baseurl = https://<<REPOIP>>/MariaDB/maxscale/latest/yum/rhel/8/x86_64
+      #> baseurl = https://dlm.mariadb.com/repo/maxscale/latest/yum/rhel/8/x86_64
+      UPSTREAM_NAME=mariadb-maxscale-upstream$OS_RELEASE
+      REPO_DIR=$MARIADB_BASE_DIR/maxscale/latest/yum/$OSRELEASE_ARCH_DIR
+      fetch_repo
+
+      #< baseurl = https://<<REPOIP>>/MariaDB/Tools/rhel/8/x86_64
+      #> baseurl = https://downloads.mariadb.com/Tools/rhel/8/x86_64
+      UPSTREAM_NAME=mariadb-tools-upstream$OS_RELEASE
+      REPO_DIR=$MARIADB_BASE_DIR/Tools/$OSRELEASE_ARCH_DIR
+      fetch_repo
+   else
+      echo "Repo directory $MARIADB_BASE_DIR or fetch directory $MARIADB_FETCH_DIR does not exist!"
+   fi
+done
+
+#[mariadb-main-upstream8]
+#[mariadb-maxscale-upstream8]
+#[mariadb-tools-upstream8]
+

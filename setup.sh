@@ -24,6 +24,8 @@ firewall-cmd --reload
 
 ### REPO STORE MANUALLY SET UP AND AVAILABLE
 
+mkdir -p $REPOSTORE/fetch-repos/mariadb-upstream/
+mkdir -p $REPOSTORE/repos/MariaDB/
 mkdir -p $REPOSTORE/repos/puppet7/el/7/
 mkdir -p $REPOSTORE/repos/puppet7/el/8/
 mkdir -p $REPOSTORE/repos/puppet6/el/7/
