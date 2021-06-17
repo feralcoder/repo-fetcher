@@ -30,20 +30,20 @@ get_os_version () {
 
 get_os_version
 if [[ $MAJOR == 8 ]]; then
-  cat $ABS_PATH/feralcoder.8.repo | sed "s|<<REPOIP>>|$REPOIP|g" > ./feralcoder.repo
-  cat $ABS_PATH/feralcoder-puppet7.repo | sed "s|<<REPOIP>>|$REPOIP|g" > ./feralcoder-puppet7.repo
+  cat $ABS_PATH/files/feralcoder.8.repo | sed "s|<<REPOIP>>|$REPOIP|g" > ./feralcoder.repo
+  cat $ABS_PATH/files/feralcoder-puppet7.repo | sed "s|<<REPOIP>>|$REPOIP|g" > ./feralcoder-puppet7.repo
 elif [[ $MAJOR == 7 ]]; then
-  cat $ABS_PATH/feralcoder.7.repo | sed "s|<<REPOIP>>|$REPOIP|g" > ./feralcoder.repo
-  cat $ABS_PATH/feralcoder-puppet6.repo | sed "s|<<REPOIP>>|$REPOIP|g" > ./feralcoder-puppet6.repo
+  cat $ABS_PATH/files/feralcoder.7.repo | sed "s|<<REPOIP>>|$REPOIP|g" > ./feralcoder.repo
+  cat $ABS_PATH/files/feralcoder-puppet6.repo | sed "s|<<REPOIP>>|$REPOIP|g" > ./feralcoder-puppet6.repo
 fi
-cp $ABS_PATH/feralcoder-8-mariadb-upstream.repo ./feralcoder-8-mariadb-upstream.repo
-cp $ABS_PATH/feralcoder-puppet6-upstream7.repo ./feralcoder-puppet6-upstream7.repo
-cp $ABS_PATH/feralcoder-puppet6-upstream8.repo ./feralcoder-puppet6-upstream8.repo
-cp $ABS_PATH/feralcoder-puppet7-upstream7.repo ./feralcoder-puppet7-upstream7.repo
-cp $ABS_PATH/feralcoder-puppet7-upstream8.repo ./feralcoder-puppet7-upstream8.repo
-cat $ABS_PATH/feralcoder-docker.repo | sed "s|<<REPOIP>>|$REPOIP|g" > ./feralcoder-docker.repo
-cp $ABS_PATH/feralcoder-docker-upstream7.repo ./feralcoder-docker-upstream7.repo
-cp $ABS_PATH/feralcoder-docker-upstream8.repo ./feralcoder-docker-upstream8.repo
+cp $ABS_PATH/files/feralcoder-8-mariadb-upstream.repo ./feralcoder-8-mariadb-upstream.repo
+cp $ABS_PATH/files/feralcoder-puppet6-upstream7.repo ./feralcoder-puppet6-upstream7.repo
+cp $ABS_PATH/files/feralcoder-puppet6-upstream8.repo ./feralcoder-puppet6-upstream8.repo
+cp $ABS_PATH/files/feralcoder-puppet7-upstream7.repo ./feralcoder-puppet7-upstream7.repo
+cp $ABS_PATH/files/feralcoder-puppet7-upstream8.repo ./feralcoder-puppet7-upstream8.repo
+cat $ABS_PATH/files/feralcoder-docker.repo | sed "s|<<REPOIP>>|$REPOIP|g" > ./feralcoder-docker.repo
+cp $ABS_PATH/files/feralcoder-docker-upstream7.repo ./feralcoder-docker-upstream7.repo
+cp $ABS_PATH/files/feralcoder-docker-upstream8.repo ./feralcoder-docker-upstream8.repo
 
 yum clean all
 yum makecache
@@ -51,8 +51,3 @@ yum repolist
 
 # The following is necessary to unwedge system updates after adding docker repo.
 dnf -y erase buildah podman
-
-#yum -y update
-#yum -y install yum-utils
-#yum-config-manager --enable PowerTools
-#yum-config-manager --enable centosplus
