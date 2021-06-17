@@ -38,10 +38,10 @@ mkdir -p $REPOSTORE/repos/centos/8/
 mkdir -p $REPOSTORE/repos/centos/8-stream/
 mkdir -p $REPOSTORE/logs/
 
-cat $THIS_SOURCE/reposync_centos8.sh.template | sed "s|<<REPOSTORE>>|$REPOSTORE|g" > $THIS_SOURCE/reposync_centos8.sh
-chmod 755 $THIS_SOURCE/reposync_centos8.sh
+cat $THIS_SOURCE/reposync.sh.template | sed "s|<<REPOSTORE>>|$REPOSTORE|g" > $THIS_SOURCE/reposync.sh
+chmod 755 $THIS_SOURCE/reposync.sh
 echo "# Fetch centos8 repos every Sunday at 3AM" > /etc/cron.d/repofetch_centos8
-echo "0 3 * * Sun root $ABS_PATH/reposync_centos8.sh > $REPOSTORE/logs/repofetch_centos8_\`date +\%Y\%m\%d_\%H\%M\`.log 2>&1" >> /etc/cron.d/repofetch_centos8
+echo "0 3 * * Sun root $ABS_PATH/reposync.sh > $REPOSTORE/logs/repofetch_centos8_\`date +\%Y\%m\%d_\%H\%M\`.log 2>&1" >> /etc/cron.d/repofetch_centos8
 systemctl reload crond.service
 
 cat $THIS_SOURCE/nginx-repos.conf | sed "s,<<REPOSTORE>>,$REPOSTORE,g" | sed "s,<<HOSTIP>>,$HOSTIP,g" > /etc/nginx/conf.d/repos.conf
