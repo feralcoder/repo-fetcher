@@ -1,5 +1,4 @@
-reposync_centos8.sh
-reposync_centos8_isos.sh
+reposync.sh
 
 *coreos-ignition-2.3.ign
 *coreos-ignition.ign
